@@ -26,7 +26,6 @@ function showTime() {
     hour = today.getHours(),
     min = today.getMinutes(),
     sec = today.getSeconds();
-    hour = 1;
 
   // Set AM or PM
   const amPm = hour >= 12 ? '<span>PM</span>' : '<span>AM</span>';
