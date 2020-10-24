@@ -18,6 +18,22 @@ body {
 
 .time {
   font-size: 8rem;
+  cursor: pointer;
+}
+
+.time > span:last-child {
+  font-size: 4rem;
+  margin-left: .4rem;
+}
+
+.date {
+  font-size: 2rem;
+  opacity: .8;
+}
+
+.day {
+  font-size: 4rem;
+  opacity: .8;
 }
 
 h1 {
@@ -29,7 +45,8 @@ h2 {
   opacity: 0.8;
 }
 
-.name {
+.name,
+.focus {
   display: inline-block;
   min-width: 206px;
 }

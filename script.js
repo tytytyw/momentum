@@ -1,29 +1,46 @@
 // DOM Elements
 const time = document.querySelector('.time'),
+  days = document.querySelector('.day'),
+  dates = document.querySelector('.date'),
   greeting = document.querySelector('.greeting'),
   name = document.querySelector('.name'),
+  focusTitle = document.querySelector('.focus_title'),
   focus = document.querySelector('.focus');
 
 // Options
-const showAmPm = true;
+let showAmPm = false;
 
 // Show Time
 function showTime() {
+  const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const mounths = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   let today = new Date(),
+    day = today.getDay(),
+    date = today.getDate(),
+    mounth = today.getMonth(),
     hour = today.getHours(),
     min = today.getMinutes(),
     sec = today.getSeconds();
-
+  
   // Set AM or PM
-  const amPm = hour >= 12 ? 'PM' : 'AM';
-
+  const amPm = hour >= 12 ? '<span>PM</span>' : '<span>AM</span>';
+  
   // 12hr Format
-  hour = hour % 12 || 12;
+  if (showAmPm){
+    hour = hour % 12 || 12;
+  }
 
   // Output Time
-  time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(
-    sec
-  )} ${showAmPm ? amPm : ''}`;
+  time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}${showAmPm ? amPm : ''}`;
+
+  // Output Time
+  days.innerHTML = `${week[day]}`;
+  dates.innerHTML=`${date} ${mounths[mounth]}`
+
+  time.onclick = () => {
+    showAmPm= !showAmPm;
+    
+  }
 
   setTimeout(showTime, 1000);
 }
@@ -37,7 +54,6 @@ function addZero(n) {
 function setBgGreet() {
   let today = new Date(),
     hour = today.getHours();
-
   if (hour < 12) {
     // Morning
     document.body.style.backgroundImage =
@@ -74,7 +90,7 @@ function ClickOnInput (e) {
  }
 
 // Set Name
-function setName(e, str) {
+function setName(e) {
 
   if (e.type === 'keypress') {
     // Make sure enter is pressed
@@ -109,6 +125,15 @@ function getFocus() {
 }
 
 // Set Focus
+// focusTitle.innerHTML = 'Your Focus For Today Is:';
+if (localStorage.getItem('focus')) {
+  setFocusTitle()
+}
+
+function setFocusTitle() {
+  focusTitle.innerHTML = 'Your Focus For Today Is:';
+}
+
 function setFocus(e) {
   if (e.type === 'keypress') {
     // Make sure enter is pressed
@@ -129,6 +154,7 @@ function setFocus(e) {
       }
     } else {
       localStorage.setItem('focus', e.target.innerText);
+      setFocusTitle();
     }
   }
 }
