@@ -96,13 +96,18 @@ function setBgGreet() {
     body.style.backgroundImage =
     `url('./assets/images/evening/${num}.jpg')`;
     greeting.textContent = 'Good Evening, ';
+    document.body.childNodes.forEach(item => {
+      if (item.className && item.className!=='bg-nav') {
+        item.style.backgroundColor = "rgba(0, 0, 0, .4)";
+      }
+    })
     document.body.style.color = 'white';
   } else {
     document.body.style.backgroundImage = `url('./assets/images/night/${num}.jpg')`;
     greeting.textContent = 'Good Night, ';
     document.body.childNodes.forEach(item => {
-      if (item.style) {
-        item.style.backgroundColor = "rgba(0, 0, 0, .2)";
+      if (item.className && item.className!=='bg-nav') {
+        item.style.backgroundColor = "rgba(0, 0, 0, .4)";
       }
     })
     document.body.style.color = 'white';
