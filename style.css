@@ -14,26 +14,42 @@ body {
   height: 100vh;
   background-size: cover;
   color: #000000;
+  transition: background .8s linear;
+  /* animation: background 1s ease; */
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+body > * {
+  background-color: rgba(255, 255, 255, .35);
+  margin-bottom: 10px;
 }
 
 .time {
   font-size: 8rem;
+  width: 32rem;
   cursor: pointer;
+  position: relative;
 }
 
-.time > span:last-child {
-  font-size: 4rem;
+.time > span:nth-child(3) {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  font-size: 2rem;
   margin-left: .4rem;
 }
 
 .date {
   font-size: 2rem;
-  opacity: .8;
 }
 
 .day {
   font-size: 4rem;
-  opacity: .8;
 }
 
 h1 {
@@ -42,7 +58,6 @@ h1 {
 
 h2 {
   margin-bottom: 0.5rem;
-  opacity: 0.8;
 }
 
 .name,
@@ -51,8 +66,31 @@ h2 {
   min-width: 206px;
 }
 
+.bg-nav {
+  position: absolute;
+  bottom: 0;
+  background-color: transparent;
+}
+
+.bg-nav button {
+  padding: 10px 40px;
+  background-color: rgba(255, 255, 255, .35);
+}
+
 @media (max-width: 700px) {
   .time {
     font-size: 6rem;
   }
 }
+/* 
+@keyframes background {
+  0% {
+    opacity: 100%;
+  }
+  50% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+} */

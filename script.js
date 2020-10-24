@@ -6,14 +6,19 @@ const time = document.querySelector('.time'),
   name = document.querySelector('.name'),
   focusTitle = document.querySelector('.focus_title'),
   focus = document.querySelector('.focus');
+  body = document.querySelector('#body');
+  let num = 1,
+  memoryHour = new Date().getHours();
 
 // Options
 let showAmPm = false;
 
 // Show Time
+const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const mounths = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
 function showTime() {
-  const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const mounths = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  
   let today = new Date(),
     day = today.getDay(),
     date = today.getDate(),
@@ -21,13 +26,24 @@ function showTime() {
     hour = today.getHours(),
     min = today.getMinutes(),
     sec = today.getSeconds();
-  
+    hour = 1;
+
   // Set AM or PM
   const amPm = hour >= 12 ? '<span>PM</span>' : '<span>AM</span>';
   
   // 12hr Format
   if (showAmPm){
     hour = hour % 12 || 12;
+    
+    if (hour !== memoryHour % 12 && hour !== 12) {
+      setBgGreet();
+      memoryHour=hour;
+    } else if (hour === 12) {
+      memoryHour=hour
+    }
+  }  else if (hour !== memoryHour) {
+    setBgGreet();
+    memoryHour=hour;
   }
 
   // Output Time
@@ -35,14 +51,24 @@ function showTime() {
 
   // Output Time
   days.innerHTML = `${week[day]}`;
-  dates.innerHTML=`${date} ${mounths[mounth]}`
-
-  time.onclick = () => {
-    showAmPm= !showAmPm;
-    
-  }
+  dates.innerHTML=`${date} ${mounths[mounth]}`;
 
   setTimeout(showTime, 1000);
+}
+
+time.onclick = () => {
+  showAmPm= !showAmPm;
+  if (showAmPm) {
+    time.style.width = '37rem';
+  } else {
+    time.style.width = '32rem';
+  }
+  showTime();
+
+///////////////////////////////////////
+  console.log('цитаты')
+  console.log('прогноз')
+  console.log('адаптив')
 }
 
 // Add Zeros
@@ -54,24 +80,41 @@ function addZero(n) {
 function setBgGreet() {
   let today = new Date(),
     hour = today.getHours();
-  if (hour < 12) {
+  if (hour < 12 && hour > 5) {
     // Morning
-    document.body.style.backgroundImage =
-      "url('https://i.ibb.co/7vDLJFb/morning.jpg')";
+    body.style.backgroundImage =
+    `url('./assets/images/morning/${num}.jpg')`;
     greeting.textContent = 'Good Morning, ';
-  } else if (hour < 18) {
+    document.body.style.color = 'black';
+  } else if (hour < 18  && hour > 5) {
     // Afternoon
-    document.body.style.backgroundImage =
-      "url('https://i.ibb.co/3mThcXc/afternoon.jpg')";
+    body.style.backgroundImage =
+    `url('./assets/images/day/${num}.jpg')`;
     greeting.textContent = 'Good Afternoon, ';
-  } else {
+    document.body.style.color = 'black';
+  } else if (hour < 24 && hour > 5) {
     // Evening
-    document.body.style.backgroundImage =
-      "url('https://i.ibb.co/924T2Wv/night.jpg')";
+    body.style.backgroundImage =
+    `url('./assets/images/evening/${num}.jpg')`;
     greeting.textContent = 'Good Evening, ';
     document.body.style.color = 'white';
+  } else {
+    document.body.style.backgroundImage = `url('./assets/images/night/${num}.jpg')`;
+    greeting.textContent = 'Good Night, ';
+    document.body.childNodes.forEach(item => {
+      if (item.style) {
+        item.style.backgroundColor = "rgba(0, 0, 0, .2)";
+      }
+    })
+    document.body.style.color = 'white';
+  }
+  if (num>19) {
+    num = 1
+  } else {
+    num++
   }
 }
+
 
 // Get Name
 function getName(e) {
@@ -158,6 +201,16 @@ function setFocus(e) {
     }
   }
 }
+
+document.querySelector("#forw").onclick = () => setBgGreet();
+document.querySelector("#back").onclick = () => {
+  if (num<3) {
+    num=21;
+  }
+  num-=2;
+  setBgGreet()
+};
+
 name.addEventListener('click', ClickOnInput);
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
