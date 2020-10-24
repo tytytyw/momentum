@@ -58,7 +58,7 @@ function setBgGreet() {
 }
 
 // Get Name
-function getName() {
+function getName(e) {
   if (localStorage.getItem('name') === null) {
     name.textContent = '[Enter Name]';
   } else {
@@ -66,16 +66,36 @@ function getName() {
   }
 }
 
+function ClickOnInput (e) {
+  
+  if (e.type === 'click') {
+    e.target.textContent=null;
+  }
+ }
+
 // Set Name
-function setName(e) {
+function setName(e, str) {
+
   if (e.type === 'keypress') {
     // Make sure enter is pressed
     if (e.which == 13 || e.keyCode == 13) {
       localStorage.setItem('name', e.target.innerText);
       name.blur();
     }
-  } else {
-    localStorage.setItem('name', e.target.innerText);
+  } 
+
+  if (e.type === 'blur') {
+
+    if (e.target.textContent == "") {
+      
+      if (localStorage.getItem('name') !== "" && localStorage.getItem('name')!==null) {
+        e.target.textContent=localStorage.getItem('name');
+      } else {
+      e.target.textContent="[Enter Name]";
+      }
+    } else {
+      localStorage.setItem('name', e.target.innerText);
+    }
   }
 }
 
@@ -96,13 +116,26 @@ function setFocus(e) {
       localStorage.setItem('focus', e.target.innerText);
       focus.blur();
     }
-  } else {
-    localStorage.setItem('focus', e.target.innerText);
+  }
+
+  if (e.type === 'blur') {
+
+    if (e.target.textContent == "") {
+      
+      if (localStorage.getItem('focus') !== "" && localStorage.getItem('focus')!==null) {
+        e.target.textContent=localStorage.getItem('focus');
+      } else {
+      e.target.textContent='[Enter Focus]';
+      }
+    } else {
+      localStorage.setItem('focus', e.target.innerText);
+    }
   }
 }
-
+name.addEventListener('click', ClickOnInput);
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
+focus.addEventListener('click', ClickOnInput);
 focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
 

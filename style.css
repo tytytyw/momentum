@@ -29,6 +29,11 @@ h2 {
   opacity: 0.8;
 }
 
+.name {
+  display: inline-block;
+  min-width: 206px;
+}
+
 @media (max-width: 700px) {
   .time {
     font-size: 6rem;
