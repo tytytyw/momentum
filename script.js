@@ -66,16 +66,17 @@ function showTime() {
 time.onclick = () => {
   showAmPm= !showAmPm;
   if (showAmPm) {
-    time.style.width = '37rem';
+    
+    if (window.screen.width>800) {
+      time.style.width = '37rem';
+    }
   } else {
-    time.style.width = '32rem';
+    
+    if (window.screen.width>800) {
+      time.style.width = '32rem';
+    }
   }
   showTime();
-
-///////////////////////////////////////
-  console.log('цитаты')
-  console.log('прогноз')
-  console.log('адаптив')
 }
 
 // Add Zeros
