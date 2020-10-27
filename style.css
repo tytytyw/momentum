@@ -81,12 +81,12 @@ h2 {
   background-color: rgba(255, 255, 255, .35);
 }
 
-.quote {
+.quote:not(.blocked) {
   cursor: pointer;
   transition: opacity .4s ease;
 }
 
-.quote:hover {
+.quote:hover:not(.blocked) {
   opacity: .8;
 }
 

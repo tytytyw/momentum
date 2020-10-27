@@ -12,7 +12,7 @@ const time = document.querySelector('.time'),
 
   quoteBody = document.querySelector('.quote__body'),
   quoteAutor = document.querySelector('.quote__autor'),
-  quoteWrep = document.querySelector('.quote');
+  quoteWrap = document.querySelector('.quote');
 
 // Options
 let showAmPm = false;
@@ -220,16 +220,43 @@ document.querySelector("#back").onclick = () => {
 };
 
 // Quote
+let ClickBlock = true;
 QuoteDay = () => {
   fetch('https://favqs.com/api/qotd')
     .then(res => res.json())
     .then(json => {
-      quoteBody.innerHTML = json.quote.body;
-      quoteAutor.innerHTML = json.quote.author;
+      ClickBlock = true;
+      quoteWrap.classList.add('blocked');
+      for (let i=0;i<json.quote.body.length;i++) {
+        setTimeout(() => {
+          quoteBody.textContent += json.quote.body[i]
+          
+          if (i===json.quote.body.length-1) {
+            
+            for (let i=0;i<json.quote.author.length;i++) {
+              setTimeout(() => {
+                quoteAutor.textContent += json.quote.author[i];
+                if (i===json.quote.author.length-1) {
+                  ClickBlock = false;
+                  quoteWrap.classList.remove('blocked')
+                }
+                
+              }, 300 * i);
+            }
+          }
+        }, 50 * i);
+      }
     })
 }
 
-quoteWrep.onclick = () => QuoteDay();
+quoteWrap.onclick = () => {
+  
+  if (!ClickBlock) {
+    QuoteDay();
+    quoteBody.innerHTML = "";
+    quoteAutor.innerHTML = "";
+  }
+}
 
 name.addEventListener('click', ClickOnInput);
 name.addEventListener('keypress', setName);
