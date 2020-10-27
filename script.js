@@ -8,7 +8,11 @@ const time = document.querySelector('.time'),
   focus = document.querySelector('.focus');
   body = document.querySelector('#body');
   let num = 1,
-  memoryHour = new Date().getHours();
+  memoryHour = new Date().getHours(),
+
+  quoteBody = document.querySelector('.quote__body'),
+  quoteAutor = document.querySelector('.quote__autor'),
+  quoteWrep = document.querySelector('.quote');
 
 // Options
 let showAmPm = false;
@@ -215,6 +219,18 @@ document.querySelector("#back").onclick = () => {
   setBgGreet()
 };
 
+// Quote
+QuoteDay = () => {
+  fetch('https://favqs.com/api/qotd')
+    .then(res => res.json())
+    .then(json => {
+      quoteBody.innerHTML = json.quote.body;
+      quoteAutor.innerHTML = json.quote.author;
+    })
+}
+
+quoteWrep.onclick = () => QuoteDay();
+
 name.addEventListener('click', ClickOnInput);
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
@@ -227,3 +243,4 @@ showTime();
 setBgGreet();
 getName();
 getFocus();
+QuoteDay();

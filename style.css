@@ -66,6 +66,10 @@ h2 {
   min-width: 206px;
 }
 
+.focus {
+  margin-bottom: 2em;
+}
+
 .bg-nav {
   position: absolute;
   bottom: 0;
@@ -75,6 +79,21 @@ h2 {
 .bg-nav button {
   padding: 10px 40px;
   background-color: rgba(255, 255, 255, .35);
+}
+
+.quote {
+  cursor: pointer;
+  transition: opacity .4s ease;
+}
+
+.quote:hover {
+  opacity: .8;
+}
+
+.quote__autor {
+  text-align: right;
+  margin-right: 20px;
+  font-size: 1.3em
 }
 
 @media (max-width: 700px) {
