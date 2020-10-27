@@ -5,14 +5,18 @@ const time = document.querySelector('.time'),
   greeting = document.querySelector('.greeting'),
   name = document.querySelector('.name'),
   focusTitle = document.querySelector('.focus_title'),
-  focus = document.querySelector('.focus');
-  body = document.querySelector('#body');
-  let num = 1,
-  memoryHour = new Date().getHours(),
-
+  focus = document.querySelector('.focus'),
+  body = document.querySelector('#body'),
   quoteBody = document.querySelector('.quote__body'),
   quoteAutor = document.querySelector('.quote__autor'),
   quoteWrap = document.querySelector('.quote');
+  const weatherIcon = document.querySelector('.weather-icon');
+  const temperature = document.querySelector('.temperature');
+  const weatherDescription = document.querySelector('.weather-description');
+  const city = document.querySelector('.city');
+
+  let num = 1,
+  memoryHour = new Date().getHours();
 
 // Options
 let showAmPm = false;
@@ -140,6 +144,66 @@ function ClickOnInput (e) {
   }
  }
 
+//Set City
+function setCity(e) {
+
+  if (e.type === 'keypress') {
+    // Make sure enter is pressed
+    if (e.which == 13 || e.keyCode == 13) {
+      let text = e.target.innerText[0].toUpperCase() + e.target.innerText.substring(1);
+      localStorage.setItem('city', text);
+      city.blur();
+      WeatherApi();
+    }
+  } 
+
+  if (e.type === 'blur') {
+
+    if (e.target.textContent == "") {
+      
+      if (localStorage.getItem('city') !== "" && localStorage.getItem('city')!==null) {
+        e.target.textContent=localStorage.getItem('city');
+      } else {
+      e.target.textContent="[Enter City]";
+      }
+    } else {
+      let text = e.target.innerText[0].toUpperCase() + e.target.innerText.substring(1);
+      localStorage.setItem('city', text);
+      e.target.textContent = text;
+      WeatherApi();
+    }
+  }
+}
+
+// Get City
+function getCity() {
+  if (localStorage.getItem('city') === null) {
+    city.textContent = '[Enter City]';
+  } else {
+    city.textContent = localStorage.getItem('city');
+    WeatherApi();
+  }
+}
+
+// Fetch Weather
+WeatherApi = () => {
+  
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${localStorage.getItem("city")}&lang=eng&appid=273dff07e552b3a5893e9a9b241eca05&units=metric`)
+  .then(res => res.json())
+  .then(json => {
+    if (!!json.main) {
+      weatherIcon.classList = `weather-icon owf`;
+      weatherIcon.classList.add(`owf-${json.weather[0].id}`);
+      temperature.textContent = `${json.main.temp.toFixed(0)}°C`;
+      weatherDescription.textContent = json.weather[0].description;
+    } else if (json.message=== "city not found") {
+      weatherIcon.classList = "";
+      temperature.textContent = "";
+      weatherDescription.innerHTML= `<span class="error"> Error: ${json.message}</span>`
+    }
+  })
+}
+
 // Set Name
 function setName(e) {
 
@@ -261,6 +325,9 @@ quoteWrap.onclick = () => {
 name.addEventListener('click', ClickOnInput);
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
+city.addEventListener('click', ClickOnInput);
+city.addEventListener('keypress', setCity);
+city.addEventListener('blur', setCity);
 focus.addEventListener('click', ClickOnInput);
 focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
@@ -271,3 +338,5 @@ setBgGreet();
 getName();
 getFocus();
 QuoteDay();
+getCity();
+

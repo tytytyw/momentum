@@ -4,10 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="assets/styles/owfont-regular.css" type="text/css">
+  <link rel="stylesheet" href="assets/styles/style.css">
   <title>momentum</title>
 </head>
 <body id="body">
+
+  <div class="weather">
+    <span class="city" contenteditable="true"></span>
+    <div class="weather__wrap">
+      <i class="weather-icon"></i>
+      <div class="weather__text">
+        <span class="temperature"></span>
+        <span class="weather-description"></span>
+      </div>
+    </div>
+  </div>
+  
   <p class="date"></p>
   <p class="day"></p>
   <time title="change time format" class="time"></time>

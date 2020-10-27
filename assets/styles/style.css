@@ -96,16 +96,59 @@ h2 {
   font-size: 1.3em
 }
 
+.quote__body {
+  padding: 0 5px;
+}
+
+.city {
+  font-size: 1.5em;
+  font-weight: 500;
+  padding: 2px 10px;
+  letter-spacing: .01em;
+}
+
 .weather-icon {
-  font-size: 160px;
+  font-size: 80px;
   color: #44aadd;
-  background-color: transparent !important;
+  padding-right: 10px;
 }
 
 .weather {
+  margin-bottom: 4em;
+  padding: 0 10px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  flex-direction: column;
+  /* background-color: transparent; */
+  align-items: center;
+}
+
+.temperature {
+  color: #042333;
+}
+
+.weather__wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-description {
+  font-style: italic;
+}
+
+.error {
+  color: rgb(163, 0, 0);
+  font-weight: 600;
+}
+
+.error strong {
+  font-size: 1.4em;
+  font-style: italic;
 }
 
 
