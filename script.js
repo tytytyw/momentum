@@ -17,6 +17,9 @@ const time = document.querySelector('.time'),
 
   let num = 1,
   memoryHour = new Date().getHours();
+  let newIndex = null;
+  let timeOfDayIndex;
+  const timeOfDay = ['morning','day','evening','night'];
 
 // Options
 let showAmPm = false;
@@ -71,7 +74,7 @@ time.onclick = () => {
       time.style.width = '37rem';
     }
   } else {
-    
+
     if (window.screen.width>800) {
       time.style.width = '32rem';
     }
@@ -84,26 +87,74 @@ function addZero(n) {
   return (parseInt(n, 10) < 10 ? '0' : '') + n;
 }
 
+// Get Background
+GetBg = (folder) => {
+  const img = document.createElement('img');
+  let src = `./assets/images/${folder}/${num}.jpg`;
+  console.log(src)
+  img.src = src;
+  img.onload = () => {  
+    body.style.backgroundImage = `url(${src})`;
+  }; 
+}
+
 // Set Background and Greeting
-function setBgGreet() {
+TimeOfDay = () => {
+
+let h = new Date().getHours();
+
+  if (h < 12 && h > 5) {
+    timeOfDayIndex=0
+  } else if (h < 18  && h > 5) {
+    timeOfDayIndex=1;
+  } else if (h < 24 && h > 5) {
+    timeOfDayIndex=2;
+  } else {
+    timeOfDayIndex=3;
+  }
+}
+
+function setBgGreet(arg) {
+
+  console.log(num)
   let today = new Date(),
     hour = today.getHours();
   if (hour < 12 && hour > 5) {
     // Morning
-    body.style.backgroundImage =
-    `url('./assets/images/morning/${num}.jpg')`;
+
+    if (!newIndex && newIndex!==0) {
+      GetBg(timeOfDay[timeOfDayIndex])
+    } else {
+      GetBg(timeOfDay[newIndex])
+    }
+    
     greeting.textContent = 'Good Morning, ';
     document.body.style.color = 'black';
   } else if (hour < 18  && hour > 5) {
-    // Afternoon
-    body.style.backgroundImage =
-    `url('./assets/images/day/${num}.jpg')`;
+
+    if (!newIndex && newIndex!==0) {
+      GetBg(timeOfDay[timeOfDayIndex])
+    } else {
+      GetBg(timeOfDay[newIndex])
+    }
     greeting.textContent = 'Good Afternoon, ';
     document.body.style.color = 'black';
   } else if (hour < 24 && hour > 5) {
     // Evening
-    body.style.backgroundImage =
-    `url('./assets/images/evening/${num}.jpg')`;
+    // const img = document.createElement('img');
+    // let src = `./assets/images/evening/${num}.jpg`;
+    // img.src = src;
+    // img.onload = () => {  
+    //   body.style.backgroundImage = `url(${src})`;
+    // }; 
+    // body.style.backgroundImage =
+    // `url('./assets/images/evening/${num}.jpg')`;
+    // GetBg('evening')
+    if (!arg && newIndex!==0) {
+      GetBg(timeOfDay[timeOfDayIndex])
+    } else {
+      GetBg(timeOfDay[newIndex])
+    }
     greeting.textContent = 'Good Evening, ';
     document.body.childNodes.forEach(item => {
       if (item.className && item.className!=='bg-nav') {
@@ -112,7 +163,13 @@ function setBgGreet() {
     })
     document.body.style.color = 'white';
   } else {
-    document.body.style.backgroundImage = `url('./assets/images/night/${num}.jpg')`;
+    // document.body.style.backgroundImage = `url('./assets/images/night/${num}.jpg')`;
+    // GetBg('night')
+    if (!newIndex && newIndex!==0) {
+      GetBg(timeOfDay[timeOfDayIndex])
+    } else {
+      GetBg(timeOfDay[newIndex])
+    }
     greeting.textContent = 'Good Night, ';
     document.body.childNodes.forEach(item => {
       if (item.className && item.className!=='bg-nav') {
@@ -122,12 +179,28 @@ function setBgGreet() {
     document.body.style.color = 'white';
   }
   if (num>19) {
-    num = 1
+    num = 1;
+    if (!!arg || arg===0) {
+      newIndex===3 ? newIndex = 0 : newIndex+=1;
+    } else {
+      newIndex = timeOfDayIndex+1
+    }
   } else {
     num++
   }
 }
 
+document.querySelector("#forw").onclick = () => {
+  !newIndex && newIndex!==0 ? setBgGreet():setBgGreet(newIndex)
+}
+
+document.querySelector("#back").onclick = () => {
+  if (num<3) {
+    num=21;
+  }
+  num-=2;
+  setBgGreet()
+};
 
 // Get Name
 function getName(e) {
@@ -275,15 +348,6 @@ function setFocus(e) {
   }
 }
 
-document.querySelector("#forw").onclick = () => setBgGreet();
-document.querySelector("#back").onclick = () => {
-  if (num<3) {
-    num=21;
-  }
-  num-=2;
-  setBgGreet()
-};
-
 // Quote
 let ClickBlock = true;
 QuoteDay = () => {
@@ -334,6 +398,7 @@ focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
 
 // Run
+TimeOfDay();
 showTime();
 setBgGreet();
 getName();
