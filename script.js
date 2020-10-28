@@ -34,8 +34,6 @@ function makeRandomArr(a, b) {
   return Math.random() - 0.5;
 }
 
-
-
 // Show Time
 function showTime() {
   
@@ -49,13 +47,14 @@ function showTime() {
 
   // Set AM or PM
   const amPm = hour >= 12 ? '<span>PM</span>' : '<span>AM</span>';
-  min =0
+
   min===0 && sec===0 ? setBgGreet():"";
   
   // 12hr Format
   if (showAmPm){
     hour = hour % 12 || 12;
   }
+  
   // Output Time
   time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}${showAmPm ? amPm : ''}`;
 
@@ -116,7 +115,7 @@ let h = new Date().getHours();
 
 function setBgGreet(arg) {
 
-  console.log(num)
+  console.log(`фон ${num}`)
   let today = new Date(),
     hour = today.getHours();
 
