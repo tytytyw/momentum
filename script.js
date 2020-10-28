@@ -94,6 +94,12 @@ GetBg = (folder) => {
   img.src = src;
   img.onload = () => {  
     body.style.backgroundImage = `url(${src})`;
+    setTimeout(() => {
+      backBtn.classList.remove('disable');
+      forwBtn.classList.remove('disable');
+      disableBtn = false;
+    }, 800);
+
   }; 
 }
 
@@ -190,11 +196,6 @@ function DisableBtn () {
   disableBtn = true;
   backBtn.classList.add('disable');
   forwBtn.classList.add('disable');
-  setTimeout(() => {
-    disableBtn = false;
-    backBtn.classList.remove('disable');
-    forwBtn.classList.remove('disable');
-  }, 1000);
 }
 
 let disableBtn = false
