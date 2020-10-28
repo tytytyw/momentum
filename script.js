@@ -12,6 +12,8 @@ quoteAutor = document.querySelector('.quote__autor'),
 quoteWrap = document.querySelector('.quote');
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
+const humidity = document.querySelector('.humidity');
+const windSpeed = document.querySelector('.wind_speed');
 const weatherDescription = document.querySelector('.weather-description');
 const city = document.querySelector('.city');
 const forwBtn = document.querySelector("#forw");
@@ -153,7 +155,7 @@ function setBgGreet(arg) {
     greeting.textContent = 'Good Evening, ';
     document.body.childNodes.forEach(item => {
       
-      if (item.className && item.className!=='bg-nav') {
+      if (item.className) {
         item.style.backgroundColor = "rgba(0, 0, 0, .4)";
       }
     })
@@ -291,9 +293,13 @@ WeatherApi = () => {
       weatherIcon.classList.add(`owf-${json.weather[0].id}`);
       temperature.textContent = `${json.main.temp.toFixed(0)}°C`;
       weatherDescription.textContent = json.weather[0].description;
+      humidity.textContent = `hum. ${json.main.humidity}%`
+      windSpeed.textContent = `wind ${json.wind.speed} м/с` 
     } else if (json.message=== "city not found") {
       weatherIcon.classList = "";
       temperature.textContent = "";
+      humidity.textContent = "";
+      windSpeed.textContent = "";
       weatherDescription.innerHTML= `<span class="error"> Error: ${json.message}</span>`
     }
   })

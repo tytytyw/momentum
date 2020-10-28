@@ -24,13 +24,13 @@ body {
   outline: none;
   cursor: pointer;
   color: inherit;
-  transition: opacity 0.4s ease;
   border: none;
+  font-weight: 600;
 }
 
 .button:active {
   transition: transform .2s ease;
-  transform: scale(.95);
+  transform: scale(.8);
 }
 
 body > * {
@@ -62,7 +62,7 @@ body > * {
 }
 
 h1 {
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 h2 {
@@ -76,20 +76,13 @@ h2 {
 }
 
 .focus {
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 
-.bg-nav {
-  background-color: transparent;
-}
 
 .bg-nav button {
-  padding: 10px 40px;
-  background-color: rgba(255, 255, 255, .55);
-}
-
-.quote {
-  margin-bottom: 2em;
+  padding: 10px 20px;
+  background-color: transparent;
 }
 
 .quote:not(.blocked) {
@@ -109,6 +102,19 @@ h2 {
 
 .quote__body {
   padding: 0 5px;
+  text-align: left;
+}
+
+.quote {
+  /* min-height: 54px; */
+  min-width: 40%;
+  min-height: 90px;
+  max-height: 90px;
+  margin-bottom: 0;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  overflow: auto;
 }
 
 .city {
@@ -125,7 +131,9 @@ h2 {
 }
 
 .weather {
-  margin-bottom: 4em;
+  min-width: 11em;
+  min-height: 114px;
+  margin-bottom: 2em;
   padding: 0 10px;
   display: flex;
   flex-direction: column;
@@ -141,6 +149,10 @@ h2 {
 .weather__text {
   display: flex;
   flex-direction: column;
+}
+.weather__text_add {
+  text-align: left;
+  padding-left: 10px;
 }
 
 .weather-description {
@@ -190,15 +202,11 @@ h2 {
   }
 
   .focus {
-    margin-bottom: 1em;
+    margin-bottom: .8em;
   }
   
   .weather {
-    margin-bottom: 2rem;
-  }
-
-  .quote {
-    margin-bottom: 1em;
+    margin-bottom: 1.5rem;
   }
 
   h1 {
@@ -232,15 +240,11 @@ h2 {
   }
 
   .focus {
-    margin-bottom: .8rem;
+    margin-bottom: .7rem;
   }
   
   .weather {
-    margin-bottom: 1.3rem;
-  }
-
-  .quote {
-    margin-bottom: .8rem;
+    margin-bottom: 1rem;
   }
 
   h1 {
