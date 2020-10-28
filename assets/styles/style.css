@@ -18,13 +18,19 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   min-width: 320px;
-  /* animation: background 1s ease; */
 }
 
-button {
+.button {
   outline: none;
   cursor: pointer;
   color: inherit;
+  transition: opacity 0.4s ease;
+  border: none;
+}
+
+.button:active {
+  transition: transform .2s ease;
+  transform: scale(.95);
 }
 
 body > * {
@@ -79,7 +85,7 @@ h2 {
 
 .bg-nav button {
   padding: 10px 40px;
-  background-color: rgba(255, 255, 255, .35);
+  background-color: rgba(255, 255, 255, .55);
 }
 
 .quote {
@@ -92,7 +98,7 @@ h2 {
 }
 
 .quote:hover:not(.blocked) {
-  opacity: .8;
+  opacity: .6;
 }
 
 .quote__autor {
@@ -149,6 +155,12 @@ h2 {
 .error strong {
   font-size: 1.4em;
   font-style: italic;
+}
+
+
+
+.disable {
+  opacity: 0;
 }
 
 

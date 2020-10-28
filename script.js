@@ -1,33 +1,42 @@
 // DOM Elements
 const time = document.querySelector('.time'),
-  days = document.querySelector('.day'),
-  dates = document.querySelector('.date'),
-  greeting = document.querySelector('.greeting'),
-  name = document.querySelector('.name'),
-  focusTitle = document.querySelector('.focus_title'),
-  focus = document.querySelector('.focus'),
-  body = document.querySelector('#body'),
-  quoteBody = document.querySelector('.quote__body'),
-  quoteAutor = document.querySelector('.quote__autor'),
-  quoteWrap = document.querySelector('.quote');
-  const weatherIcon = document.querySelector('.weather-icon');
-  const temperature = document.querySelector('.temperature');
-  const weatherDescription = document.querySelector('.weather-description');
-  const city = document.querySelector('.city');
+days = document.querySelector('.day'),
+dates = document.querySelector('.date'),
+greeting = document.querySelector('.greeting'),
+name = document.querySelector('.name'),
+focusTitle = document.querySelector('.focus_title'),
+focus = document.querySelector('.focus'),
+body = document.querySelector('#body'),
+quoteBody = document.querySelector('.quote__body'),
+quoteAutor = document.querySelector('.quote__autor'),
+quoteWrap = document.querySelector('.quote');
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+const city = document.querySelector('.city');
+const forwBtn = document.querySelector("#forw");
+const backBtn = document.querySelector("#back");
 
-  let num = 1,
-  memoryHour = new Date().getHours();
-  let newIndex = null;
-  let timeOfDayIndex;
-  const timeOfDay = ['morning','day','evening','night'];
-
+let num = 1;
+// memoryHour = new Date().getHours();
+let newIndex = null;
+let timeOfDayIndex;
+const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const mounths = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const timeOfDay = ['morning','day','evening','night'];
+const imagesNames = ['1.jpg','2.jpg','3.jpg','4.jpg','5.jpg','6.jpg','7.jpg','8.jpg','9.jpg','10.jpg','11.jpg','12.jpg','13.jpg','14.jpg','15.jpg','16.jpg','17.jpg','18.jpg','19.jpg','20.jpg']
+const imgRandom = imagesNames.sort(makeRandomArr);
 // Options
 let showAmPm = false;
 
-// Show Time
-const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const mounths = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+// Random array
+function makeRandomArr(a, b) {
+  return Math.random() - 0.5;
+}
 
+
+
+// Show Time
 function showTime() {
   
   let today = new Date(),
@@ -40,22 +49,13 @@ function showTime() {
 
   // Set AM or PM
   const amPm = hour >= 12 ? '<span>PM</span>' : '<span>AM</span>';
+  min =0
+  min===0 && sec===0 ? setBgGreet():"";
   
   // 12hr Format
   if (showAmPm){
     hour = hour % 12 || 12;
-    
-    if (hour !== memoryHour % 12 && hour !== 12) {
-      setBgGreet();
-      memoryHour=hour;
-    } else if (hour === 12) {
-      memoryHour=hour
-    }
-  }  else if (hour !== memoryHour) {
-    setBgGreet();
-    memoryHour=hour;
   }
-
   // Output Time
   time.innerHTML = `${hour}<span>:</span>${addZero(min)}<span>:</span>${addZero(sec)}${showAmPm ? amPm : ''}`;
 
@@ -90,7 +90,7 @@ function addZero(n) {
 // Get Background
 GetBg = (folder) => {
   const img = document.createElement('img');
-  let src = `./assets/images/${folder}/${num}.jpg`;
+  let src = `./assets/images/${folder}/${imgRandom[num-1]}`;
   console.log(src)
   img.src = src;
   img.onload = () => {  
@@ -119,10 +119,11 @@ function setBgGreet(arg) {
   console.log(num)
   let today = new Date(),
     hour = today.getHours();
+
   if (hour < 12 && hour > 5) {
     // Morning
 
-    if (!newIndex && newIndex!==0) {
+    if (!arg) {
       GetBg(timeOfDay[timeOfDayIndex])
     } else {
       GetBg(timeOfDay[newIndex])
@@ -132,7 +133,7 @@ function setBgGreet(arg) {
     document.body.style.color = 'black';
   } else if (hour < 18  && hour > 5) {
 
-    if (!newIndex && newIndex!==0) {
+    if (!arg) {
       GetBg(timeOfDay[timeOfDayIndex])
     } else {
       GetBg(timeOfDay[newIndex])
@@ -141,45 +142,40 @@ function setBgGreet(arg) {
     document.body.style.color = 'black';
   } else if (hour < 24 && hour > 5) {
     // Evening
-    // const img = document.createElement('img');
-    // let src = `./assets/images/evening/${num}.jpg`;
-    // img.src = src;
-    // img.onload = () => {  
-    //   body.style.backgroundImage = `url(${src})`;
-    // }; 
-    // body.style.backgroundImage =
-    // `url('./assets/images/evening/${num}.jpg')`;
-    // GetBg('evening')
-    if (!arg && newIndex!==0) {
+
+    if (!arg) {
       GetBg(timeOfDay[timeOfDayIndex])
     } else {
       GetBg(timeOfDay[newIndex])
     }
     greeting.textContent = 'Good Evening, ';
     document.body.childNodes.forEach(item => {
+      
       if (item.className && item.className!=='bg-nav') {
         item.style.backgroundColor = "rgba(0, 0, 0, .4)";
       }
     })
     document.body.style.color = 'white';
   } else {
-    // document.body.style.backgroundImage = `url('./assets/images/night/${num}.jpg')`;
-    // GetBg('night')
-    if (!newIndex && newIndex!==0) {
+
+    if (!arg) {
       GetBg(timeOfDay[timeOfDayIndex])
     } else {
       GetBg(timeOfDay[newIndex])
     }
     greeting.textContent = 'Good Night, ';
     document.body.childNodes.forEach(item => {
+      
       if (item.className && item.className!=='bg-nav') {
         item.style.backgroundColor = "rgba(0, 0, 0, .4)";
       }
     })
     document.body.style.color = 'white';
   }
+  
   if (num>19) {
     num = 1;
+    
     if (!!arg || arg===0) {
       newIndex===3 ? newIndex = 0 : newIndex+=1;
     } else {
@@ -189,17 +185,43 @@ function setBgGreet(arg) {
     num++
   }
 }
+// Background navigation click
 
+function DisableBtn () {
+  disableBtn = true;
+  backBtn.classList.add('disable');
+  forwBtn.classList.add('disable');
+  setTimeout(() => {
+    disableBtn = false;
+    backBtn.classList.remove('disable');
+    forwBtn.classList.remove('disable');
+  }, 1000);
+}
+
+let disableBtn = false
 document.querySelector("#forw").onclick = () => {
-  !newIndex && newIndex!==0 ? setBgGreet():setBgGreet(newIndex)
+  if (!disableBtn) {
+    !newIndex && newIndex!==0 ? setBgGreet():setBgGreet(newIndex)
+    DisableBtn()
+  }
 }
 
 document.querySelector("#back").onclick = () => {
-  if (num<3) {
-    num=21;
+  
+  if (!disableBtn) {
+    if (num<3) {
+      num ===1 ? num=21:num=22
+      
+      if (!!newIndex || newIndex===0) {
+        newIndex===0 ? newIndex = 3 : newIndex-=1;
+      } else {
+        timeOfDayIndex===0? newIndex = 3 : newIndex = timeOfDayIndex-1
+      }
+    }
+    num-=2;
+    !newIndex && newIndex!==0 ? setBgGreet():setBgGreet(newIndex);
+    DisableBtn();
   }
-  num-=2;
-  setBgGreet()
 };
 
 // Get Name
@@ -314,7 +336,6 @@ function getFocus() {
 }
 
 // Set Focus
-// focusTitle.innerHTML = 'Your Focus For Today Is:';
 if (localStorage.getItem('focus')) {
   setFocusTitle()
 }
@@ -406,3 +427,8 @@ getFocus();
 QuoteDay();
 getCity();
 
+// first load
+if (!localStorage.length) {
+  localStorage.setItem("loaded",true)
+  alert('Доброго времени суток, цитата меняется по клику на нее (когда она полностью прогружена), в консоле есть полезная для кросс чека информация')
+}
