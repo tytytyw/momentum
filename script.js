@@ -44,7 +44,6 @@ function showTime() {
     hour = today.getHours(),
     min = today.getMinutes(),
     sec = today.getSeconds();
-
   // Set AM or PM
   const amPm = hour >= 12 ? '<span>PM</span>' : '<span>AM</span>';
 
@@ -88,9 +87,11 @@ function addZero(n) {
 
 // Get Background
 GetBg = (folder) => {
+  console.log(`время суток ${folder}`)
   const img = document.createElement('img');
   let src = `./assets/images/${folder}/${imgRandom[num-1]}`;
   console.log(src)
+  console.log(' ')
   img.src = src;
   img.onload = () => {  
     body.style.backgroundImage = `url(${src})`;
@@ -107,7 +108,6 @@ GetBg = (folder) => {
 TimeOfDay = () => {
 
 let h = new Date().getHours();
-
   if (h < 12 && h > 5) {
     timeOfDayIndex=0
   } else if (h < 18  && h > 5) {
@@ -120,15 +120,12 @@ let h = new Date().getHours();
 }
 
 function setBgGreet(arg) {
-
-  console.log(`фон ${num}`)
+  console.log(`индекс картинки ${num}`)
   let today = new Date(),
     hour = today.getHours();
-
   if (hour < 12 && hour > 5) {
     // Morning
-
-    if (!arg) {
+    if (!arg && arg!==0) {
       GetBg(timeOfDay[timeOfDayIndex])
     } else {
       GetBg(timeOfDay[newIndex])
@@ -138,7 +135,7 @@ function setBgGreet(arg) {
     document.body.style.color = 'black';
   } else if (hour < 18  && hour > 5) {
 
-    if (!arg) {
+    if (!arg && arg!==0) {
       GetBg(timeOfDay[timeOfDayIndex])
     } else {
       GetBg(timeOfDay[newIndex])
@@ -148,7 +145,7 @@ function setBgGreet(arg) {
   } else if (hour < 24 && hour > 5) {
     // Evening
 
-    if (!arg) {
+    if (!arg && arg!==0) {
       GetBg(timeOfDay[timeOfDayIndex])
     } else {
       GetBg(timeOfDay[newIndex])
@@ -163,7 +160,7 @@ function setBgGreet(arg) {
     document.body.style.color = 'white';
   } else {
 
-    if (!arg) {
+    if (!arg && arg!==0) {
       GetBg(timeOfDay[timeOfDayIndex])
     } else {
       GetBg(timeOfDay[newIndex])
@@ -209,13 +206,15 @@ document.querySelector("#forw").onclick = () => {
 document.querySelector("#back").onclick = () => {
   
   if (!disableBtn) {
+    
     if (num<3) {
       num ===1 ? num=21:num=22
-      
+
       if (!!newIndex || newIndex===0) {
+        
         newIndex===0 ? newIndex = 3 : newIndex-=1;
       } else {
-        timeOfDayIndex===0? newIndex = 3 : newIndex = timeOfDayIndex-1
+                timeOfDayIndex===0? newIndex = 3 : newIndex = timeOfDayIndex-1
       }
     }
     num-=2;
@@ -430,5 +429,5 @@ getCity();
 // first load
 if (!localStorage.length) {
   localStorage.setItem("loaded",true)
-  alert('Доброго времени суток, цитата меняется по клику на нее (когда она полностью прогружена), в консоле есть полезная для кросс чека информация')
+  alert('Доброго времени суток. Цитата меняется по клику на нее (когда она полностью прогружена). Всего картинок 80 (20*4) они меняются каждый час (0 мин и 0 сек), картинки при перезагрузке страницы сортируются рандомно(в пределах времени суток), далее листаются последовательно (если пролистать все ихображения, всех времен суток, то вы вернетесь к начальной). В консоле есть полезная для кросс чека информация')
 }

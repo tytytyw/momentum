@@ -72,7 +72,7 @@ h2 {
 .name,
 .focus {
   display: inline-block;
-  min-width: 206px;
+  min-width: 80px;
 }
 
 .focus {
