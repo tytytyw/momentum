@@ -247,10 +247,14 @@ function setCity(e) {
   if (e.type === 'keypress') {
     // Make sure enter is pressed
     if (e.which == 13 || e.keyCode == 13) {
-      let text = e.target.innerText[0].toUpperCase() + e.target.innerText.substring(1);
-      localStorage.setItem('city', text);
-      city.blur();
-      WeatherApi();
+      e.preventDefault();
+      
+      if (e.target.textContent !== "") {
+        let text = e.target.innerText[0].toUpperCase() + e.target.innerText.substring(1);
+        localStorage.setItem('city', text);
+        WeatherApi();
+      }
+    e.target.blur();
     }
   } 
 
@@ -270,6 +274,7 @@ function setCity(e) {
       WeatherApi();
     }
   }
+
 }
 
 // Get City
@@ -307,13 +312,21 @@ WeatherApi = () => {
 
 // Set Name
 function setName(e) {
+  
+  if (e.which == 13 || e.keyCode == 13 || e.code === 'Enter' || e.key === 'Enter') {
+    e.preventDefault();
 
-  if (e.type === 'keypress') {
-    // Make sure enter is pressed
-    if (e.which == 13 || e.keyCode == 13) {
+    if (e.target.textContent == "") {
+      
+      if (localStorage.getItem('name') !== "" && localStorage.getItem('name')!==null) {
+        e.target.textContent=localStorage.getItem('name');
+      } else {
+      e.target.textContent="[Enter Name]";
+      }
+    } else {
       localStorage.setItem('name', e.target.innerText);
-      name.blur();
     }
+    e.target.blur();
   } 
 
   if (e.type === 'blur') {
@@ -353,8 +366,12 @@ function setFocus(e) {
   if (e.type === 'keypress') {
     // Make sure enter is pressed
     if (e.which == 13 || e.keyCode == 13) {
-      localStorage.setItem('focus', e.target.innerText);
-      focus.blur();
+      e.preventDefault();
+      
+      if (e.target.innerText) {
+        localStorage.setItem('focus', e.target.innerText);
+      }
+      e.target.blur();
     }
   }
 
